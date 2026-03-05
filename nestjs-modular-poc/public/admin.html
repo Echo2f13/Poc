@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroAmazon - Admin Panel</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <div class="admin-topbar">
+    <div class="admin-topbar-inner">
+      <a href="/admin.html" class="admin-logo">Micro<span>Amazon</span> <span class="admin-badge">ADMIN</span></a>
+      <div class="admin-topbar-right">
+        <span class="admin-live-dot"></span> Live Database View
+        <button class="btn btn-secondary btn-sm" onclick="refreshAll()">Refresh</button>
+        <a href="/products.html" class="btn btn-secondary btn-sm">Back to Store</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-container">
+    <div class="admin-stats" id="adminStats">
+      <div class="admin-stat-card">
+        <div class="admin-stat-value" id="statUsers">-</div>
+        <div class="admin-stat-label">Users</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-value" id="statProducts">-</div>
+        <div class="admin-stat-label">Products</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-value" id="statOrders">-</div>
+        <div class="admin-stat-label">Orders</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-value" id="statRevenue">-</div>
+        <div class="admin-stat-label">Total Revenue</div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-header">
+        <h2>Users</h2>
+        <span class="admin-count" id="usersCount"></span>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="usersTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-header">
+        <h2>Products</h2>
+        <span class="admin-count" id="productsCount"></span>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="productsTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-header">
+        <h2>Orders</h2>
+        <span class="admin-count" id="ordersCount"></span>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="ordersTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User ID</th>
+              <th>User Name</th>
+              <th>Product ID</th>
+              <th>Product Name</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    &copy; 2026 MicroAmazon Admin Panel (NestJS POC)
+  </footer>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>
