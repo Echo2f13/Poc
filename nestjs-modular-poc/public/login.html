@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroAmazon - Sign In</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-header">
+      <div class="brand">Micro<span>Amazon</span></div>
+    </div>
+
+    <div class="login-card">
+      <h1>Sign in</h1>
+
+      <form id="loginForm" onsubmit="return handleLogin(event)">
+        <div class="form-group">
+          <label for="email">Email or username</label>
+          <input type="text" id="email" placeholder="Enter your email" autofocus>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password">
+        </div>
+        <button type="submit" class="btn btn-primary login-btn" id="signInBtn">Sign in</button>
+      </form>
+
+      <p class="login-hint">Use any password — authentication is simulated for this POC.</p>
+
+      <div class="login-terms">
+        By continuing, you agree to MicroAmazon's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.
+      </div>
+    </div>
+
+    <div class="divider"><span>New to MicroAmazon?</span></div>
+
+    <button class="btn btn-secondary create-btn" onclick="toggleCreateForm()">Create your MicroAmazon account</button>
+
+    <div class="login-card create-card" id="createCard" style="display:none">
+      <h2>Create account</h2>
+      <form id="createForm" onsubmit="return handleCreate(event)">
+        <div class="form-group">
+          <label for="newName">Your name</label>
+          <input type="text" id="newName" placeholder="First and last name">
+        </div>
+        <div class="form-group">
+          <label for="newEmail">Email</label>
+          <input type="email" id="newEmail" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="newPassword">Password</label>
+          <input type="password" id="newPassword" placeholder="At least 6 characters">
+          <span class="field-hint">&#9432; Passwords are not validated in this POC</span>
+        </div>
+        <button type="submit" class="btn btn-primary login-btn">Create your MicroAmazon account</button>
+      </form>
+    </div>
+
+    <div class="login-footer">
+      <div class="footer-links">
+        <a href="#">Conditions of Use</a>
+        <a href="#">Privacy Notice</a>
+        <a href="#">Help</a>
+      </div>
+      <p>&copy; 2026 MicroAmazon (NestJS POC)</p>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>
