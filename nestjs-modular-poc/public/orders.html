@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroAmazon - Your Orders</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="navbar" id="navbar"></div>
+  <div class="sub-nav">
+    <a href="/orders.html">Orders</a>
+    <a href="/products.html">Buy Again</a>
+    <a href="/products.html">Not Yet Shipped</a>
+    <a href="/products.html">Cancelled Orders</a>
+  </div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Your Orders</h1>
+      <a href="/products.html" class="btn btn-secondary">Continue Shopping</a>
+    </div>
+
+    <div class="orders-summary" id="ordersSummary"></div>
+    <div id="ordersContainer">
+      <p>Loading orders...</p>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    &copy; 2026 MicroAmazon (NestJS POC) &mdash;
+    <a href="/products.html">Products</a>
+    <a href="/orders.html">Orders</a>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/orders.js"></script>
+</body>
+</html>
