@@ -191,6 +191,30 @@
 
 ---
 
+### 9. Nixon — Payment Gateway & Invoice Generation (Frontend)
+
+**Files:**
+- `public/payment.html`
+- `public/js/payment.js`
+- `public/css/payment.css`
+
+**Responsibilities:**
+- Build the checkout page at `/payment.html` with a two-column layout (payment form + order summary)
+- Implement 3 payment method options: Credit/Debit Card (with card form), UPI, and Cash on Delivery
+- Display order summary sidebar with product details, subtotal, tax (8%), and total
+- Build an animated payment processing overlay with step-by-step progress indicators
+- Generate a downloadable PDF invoice from scratch using raw PDF specification (no external library)
+- Invoice includes: invoice number, order number, date, customer details, itemized product, tax breakdown, payment status
+- Wire the "Buy Now" button on the products page to redirect to the checkout flow
+
+**Key Concepts to Explain:**
+- How URL query parameters (`?productId=5`) pass data between pages
+- How the payment processing animation simulates a real gateway with sequential async steps
+- How PDF files are generated client-side using the raw PDF 1.4 specification without any library
+- How `Blob` and `URL.createObjectURL()` trigger a file download in the browser
+
+---
+
 ## Summary Table
 
 | Member | Area | Backend/Frontend | Files |
@@ -203,6 +227,7 @@
 | **Navya** | Products Page | Frontend | `products.html`, `products.js` |
 | **Rajshekar** | Orders Page, CSS & Utilities | Frontend | `orders.html`, `orders.js`, `style.css`, `api.js` |
 | **Satwik G** | Admin Panel | Frontend | `admin.html`, `admin.js`, `admin.css` |
+| **Nixon** | Payment Gateway & Invoicing | Frontend | `payment.html`, `payment.js`, `payment.css` |
 
 ---
 
@@ -220,6 +245,7 @@ Step 4: M Nikhil      → Login Page (depends on Users API being ready)
         Navya         → Products Page (depends on Products + Orders API being ready)
 Step 5: Rajshekar     → Orders Page (depends on Orders API + api.js being ready)
         Satwik G      → Admin Panel (depends on all 3 APIs being ready)
+        Nixon         → Payment Gateway (depends on Products + Orders API being ready)
 Step 6: All           → Integration testing & final review
 ```
 

@@ -68,7 +68,7 @@ async function loadProducts() {
             FREE delivery <strong>${deliveryDay}</strong>
           </div>
           <div class="card-actions">
-            <button class="btn btn-buy" onclick="buyProduct(${p.id}, '${p.name.replace(/'/g, "\\'")}')">Add to Cart</button>
+            <button class="btn btn-buy" onclick="buyProduct(${p.id})">Buy Now</button>
           </div>
         </div>
       </div>
@@ -76,10 +76,8 @@ async function loadProducts() {
   }).join('');
 }
 
-async function buyProduct(productId, productName) {
-  const user = getCurrentUser();
-  await apiPost('/orders', { userId: user.id, productId });
-  showToast('Added to orders: ' + productName);
+function buyProduct(productId) {
+  window.location.href = '/payment.html?productId=' + productId;
 }
 
 async function addProduct() {
