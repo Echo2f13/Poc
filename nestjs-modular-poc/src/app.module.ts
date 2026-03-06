@@ -9,7 +9,7 @@ import { OrdersModule } from './orders/orders.module';
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
-      exclude: ['/users*', '/products*', '/orders*'],
+      exclude: ['/users{*path}', '/products{*path}', '/orders{*path}'],
     }),
     UsersModule,
     ProductsModule,
