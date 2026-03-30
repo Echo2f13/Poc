@@ -1,4 +1,10 @@
+import { IsUUID, IsOptional } from 'class-validator';
+
 export class CreateOrderDto {
-  userId: number;
-  productId: number;
+  @IsUUID()
+  userId: string;
+
+  @IsOptional()
+  @IsUUID()
+  addressId?: string;
 }

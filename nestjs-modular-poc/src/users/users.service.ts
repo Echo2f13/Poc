@@ -1,46 +1,68 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { IsNull, Repository } from 'typeorm';
+import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [
-    { id: 1, name: 'John Smith', email: 'john@example.com' },
-    { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
-    { id: 3, name: 'Alice Johnson', email: 'alice@example.com' },
-    { id: 4, name: 'Bob Williams', email: 'bob@example.com' },
-    { id: 5, name: 'Charlie Brown', email: 'charlie@example.com' },
-    { id: 6, name: 'Diana Prince', email: 'diana@example.com' },
-    { id: 7, name: 'Edward Norton', email: 'edward@example.com' },
-    { id: 8, name: 'Fiona Apple', email: 'fiona@example.com' },
-    { id: 9, name: 'George Miller', email: 'george@example.com' },
-    { id: 10, name: 'Hannah Lee', email: 'hannah@example.com' },
-    { id: 11, name: 'Ivan Petrov', email: 'ivan@example.com' },
-    { id: 12, name: 'Julia Roberts', email: 'julia@example.com' },
-    { id: 13, name: 'Kevin Hart', email: 'kevin@example.com' },
-    { id: 14, name: 'Laura Chen', email: 'laura@example.com' },
-    { id: 15, name: 'Michael Scott', email: 'michael@example.com' },
-  ];
+  constructor(
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
+  ) {}
 
-  findAll(): User[] {
-    return this.users;
+  async findAll(page = 1, limit = 20): Promise<{ data: Partial<User>[]; total: number }> {
+    const [rows, total] = await this.usersRepository.findAndCount({
+      where: { deletedAt: IsNull() },
+      order: { createdAt: 'DESC' },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    const data = rows.map((u) => this.toPublic(u));
+    return { data, total };
   }
 
-  findOne(id: number): User | undefined {
-    return this.users.find((user) => user.id === id);
+  async findOne(id: string): Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: { id, deletedAt: IsNull() },
+    });
+    if (!user) throw new NotFoundException(`User ${id} not found`);
+    return user;
   }
 
-  create(createUserDto: CreateUserDto): User {
-    const newUser: User = {
-      id: this.users.length + 1,
+  async findOnePublic(id: string): Promise<Partial<User>> {
+    const user = await this.findOne(id);
+    return this.toPublic(user);
+  }
+
+  private toPublic(user: User): Partial<User> {
+    const { passwordHash: _ph, deletedAt: _da, ...safe } = user;
+    return safe;
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.usersRepository.findOne({
+      where: { email: email.toLowerCase(), deletedAt: IsNull() },
+    });
+  }
+
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const existing = await this.findByEmail(createUserDto.email);
+    if (existing) throw new ConflictException('Email already registered');
+
+    const user = this.usersRepository.create({
       ...createUserDto,
-    };
-    this.users.push(newUser);
-    return newUser;
+      email: createUserDto.email.toLowerCase(),
+      passwordHash: 'placeholder',
+    });
+    return this.usersRepository.save(user);
+  }
+
+  async createWithHash(data: { name: string; email: string; passwordHash: string }): Promise<User> {
+    const user = this.usersRepository.create({
+      ...data,
+      email: data.email.toLowerCase(),
+    });
+    return this.usersRepository.save(user);
   }
 }
